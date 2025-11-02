@@ -1,3 +1,4 @@
+import { BookingForm } from "@/Components/BookingForm";
 import Header from "@/Components/Header";
 import { StatsCol } from "@/Components/container/StatsCol";
 import TabContent from "@/Components/container/TabContent";
@@ -12,13 +13,21 @@ import { useEffect, useState } from "react";
 const Index = () => {
   const [spots, setSpots] = useState<ParkingSpot[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
+  const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
-    const spotMock = generateMockParkingSpots();
-    const bookingsMock = generateMockBookings(spotMock);
-    setSpots(spotMock);
+    const bookingsMock = generateMockBookings(generateMockParkingSpots);
+    setSpots(generateMockParkingSpots);
     setBookings(bookingsMock);
   }, []);
+
+  const handleSpotClick = (spot: ParkingSpot) => {
+    if (spot.status === "tersedia") {
+      setSelectedSpot(spot);
+      setIsFormOpen(true);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-background">
@@ -37,7 +46,19 @@ const Index = () => {
             spots={spots}
             bookings={bookings}
             handleEndSession={() => {}}
+            handleSpotClick={handleSpotClick}
           />
+
+          {isFormOpen && selectedSpot && (
+            <BookingForm
+              selectedSpot={selectedSpot}
+              onSubmit={() => {}}
+              onCancel={() => {
+                setIsFormOpen(false);
+                setSelectedSpot(null);
+              }}
+            />
+          )}
         </Tabs>
       </section>
     </main>

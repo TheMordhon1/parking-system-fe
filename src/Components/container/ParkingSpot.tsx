@@ -22,17 +22,8 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
   const stageHeight = 600;
 
   const getSpotColor = (spot: ParkingSpot) => {
-    if (spot.status === "available") {
-      switch (spot.type) {
-        case "electric":
-          return "#3b82f6";
-        case "disabled":
-          return "#a855f7";
-        case "valet":
-          return "#f97316";
-        default:
-          return "#22c55e";
-      }
+    if (spot.status === "tersedia") {
+      return "#22c55e";
     } else {
       return "#ef4444";
     }
@@ -40,14 +31,16 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
 
   const getSpotIcon = (type: ParkingSpot["type"]) => {
     switch (type) {
-      case "disabled":
+      case "disabilitas":
         return "♿";
-      case "electric":
+      case "listrik":
         return "🔋";
       case "valet":
-        return "🅿️";
-      default:
+        return "🧍🏻‍♂️";
+      case "umum":
         return "🚗";
+      default:
+        return "";
     }
   };
 
@@ -56,7 +49,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
     spot: ParkingSpot
   ) => {
     const container = e.target.getStage()?.container();
-    if (container && spot.status === "available") {
+    if (container && spot.status === "tersedia") {
       container.style.cursor = "pointer";
       setHoveredSpotId(spot.id);
     }
@@ -86,56 +79,68 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
           height={stageHeight + 30}
           scaleX={stageScale}
           scaleY={stageScale}
-          className="bg-blue-300 border border-border rounded-lg shadow-sm"
+          className="bg-[#383821] border border-border rounded-lg shadow-sm"
         >
           <Layer>
-            <Group x={25} y={stageHeight - 10}>
-              <Rect x={0} y={0} width={20} height={20} fill="#22c55e" />
-              <Text x={25} y={2} text="Tersedia" fontSize={14} fill="#ffffff" />
-
-              <Rect x={100} y={0} width={20} height={20} fill="#ef4444" />
-              <Text x={125} y={2} text="Terisi" fontSize={14} fill="#ffffff" />
-
-              <Rect x={200} y={0} width={20} height={20} fill="#f97316" />
-              <Text x={225} y={2} text="Valet" fontSize={14} fill="#ffffff" />
-
-              <Rect x={300} y={0} width={20} height={20} fill="#3b82f6" />
-              <Text x={325} y={2} text="Listrik" fontSize={14} fill="#ffffff" />
-
-              <Rect x={400} y={0} width={20} height={20} fill="#a855f7" />
-              <Text
-                x={425}
-                y={2}
-                text="Disabilitas"
-                fontSize={14}
-                fill="#ffffff"
+            {/* Road markings */}
+            {Array.from({ length: 20 }).map((_, i) => (
+              <Rect
+                key={`dash-${i}`}
+                x={i * (stageWidth / 20) + 10}
+                y={160}
+                width={30}
+                height={4}
+                fill="hsl(48, 96%, 53%)"
               />
-            </Group>
+            ))}
 
+            {Array.from({ length: 20 }).map((_, i) => (
+              <Rect
+                key={`dash-${i}`}
+                x={i * (stageWidth / 20) + 10}
+                y={300}
+                width={30}
+                height={4}
+                fill="hsl(48, 96%, 53%)"
+              />
+            ))}
+
+            {Array.from({ length: 20 }).map((_, i) => (
+              <Rect
+                key={`dash-${i}`}
+                x={i * (stageWidth / 20) + 10}
+                y={440}
+                width={30}
+                height={4}
+                fill="hsl(48, 96%, 53%)"
+              />
+            ))}
+
+            {/* spots */}
             <Group y={10}>
               {spots.map((spot) => {
                 const isHovered = hoveredSpotId === spot.id;
                 const scale =
-                  isHovered && spot.status === "available" ? 1.05 : 1;
+                  isHovered && spot.status === "tersedia" ? 1.05 : 1;
                 const opacity =
-                  isHovered && spot.status === "available"
+                  isHovered && spot.status === "tersedia"
                     ? 1
-                    : spot.status === "available"
+                    : spot.status === "tersedia"
                     ? 0.9
-                    : 0.4;
+                    : 0.7;
 
                 return (
                   <Group
                     key={spot.id}
                     x={spot.x + (spot.width * (1 - scale)) / 2}
-                    y={spot.y + (spot.height * (1 - scale)) / 2}
+                    y={spot.y + (spot.height * (1 - 1.02)) / 2}
                     scaleX={scale}
                     scaleY={scale}
                     onClick={() =>
-                      spot.status === "available" && onSpotClick(spot)
+                      spot.status === "tersedia" && onSpotClick(spot)
                     }
                     onTap={() =>
-                      spot.status === "available" && onSpotClick(spot)
+                      spot.status === "tersedia" && onSpotClick(spot)
                     }
                     onMouseEnter={(e) => handleMouseEnter(e, spot)}
                     onMouseLeave={handleMouseLeave}
@@ -163,7 +168,9 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                       x={0}
                       y={spot.height / 2 - 15}
                       width={spot.width}
-                      text={getSpotIcon(spot.type)}
+                      text={
+                        spot.status === "terisi" ? "⛔" : getSpotIcon(spot.type)
+                      }
                       fontSize={30}
                       align="center"
                     />
@@ -171,7 +178,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                       x={0}
                       y={spot.height - 30}
                       width={spot.width}
-                      text={spot.status === "available" ? "TERSEDIA" : "TERISI"}
+                      text={spot.status === "tersedia" ? "TERSEDIA" : "TERISI"}
                       fontSize={10}
                       fill="#ffffff"
                       align="center"
@@ -179,6 +186,37 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                   </Group>
                 );
               })}
+            </Group>
+
+            {/* label */}
+            <Group x={25} y={stageHeight - 10}>
+              {[
+                { icon: "🚗", label: "Umum", x: 100 },
+                { icon: "⛔", label: "Terisi", x: 200 },
+                { icon: "🧍🏻‍♂️", label: "Valet", x: 300 },
+                { icon: "🔋", label: "Listrik" },
+                { icon: "♿", label: "Disabilitas", x: 400 },
+              ].map((item) => (
+                <Group key={item.label} x={item.x}>
+                  <Text
+                    x={0}
+                    y={4}
+                    width={36}
+                    align="center"
+                    text={item.icon}
+                    fontSize={22}
+                  />
+
+                  <Text
+                    x={35}
+                    y={7}
+                    text={item.label}
+                    fontSize={16}
+                    fill="#ffffff"
+                    fontStyle="bold"
+                  />
+                </Group>
+              ))}
             </Group>
           </Layer>
         </Stage>

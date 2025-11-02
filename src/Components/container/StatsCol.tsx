@@ -9,8 +9,8 @@ interface StatsProps {
 
 export const StatsCol = ({ spots, bookings }: StatsProps) => {
   const totalSpots = spots.length;
-  const availableSpots = spots.filter((s) => s.status === "available").length;
-  const occupiedSpots = spots.filter((s) => s.status === "occupied").length;
+  const availableSpots = spots.filter((s) => s.status === "tersedia").length;
+  const occupiedSpots = spots.filter((s) => s.status === "terisi").length;
   const activeBookings = bookings.filter((b) => b.status === "active").length;
 
   const stats = [

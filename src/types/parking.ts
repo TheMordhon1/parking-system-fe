@@ -6,7 +6,7 @@ export interface ParkingSpot {
   width: number;
   height: number;
   status: "available" | "occupied";
-  type: "regular" | "disabled" | "electric" | "valet";
+  type: "umum" | "disabilitas" | "listrik" | "valet";
 }
 
 export interface Booking {

@@ -7,9 +7,15 @@ interface TabContentProps {
   spots: ParkingSpot[];
   bookings: Booking[];
   handleEndSession: (bookingId: string) => void;
+  handleSpotClick: (spot: ParkingSpot) => void;
 }
 
-const TabContent = ({ spots, bookings, handleEndSession }: TabContentProps) => {
+const TabContent = ({
+  spots,
+  bookings,
+  handleSpotClick,
+  handleEndSession,
+}: TabContentProps) => {
   return (
     <>
       <TabsContent value="map" className="mt-6 space-y-4">
@@ -24,7 +30,7 @@ const TabContent = ({ spots, bookings, handleEndSession }: TabContentProps) => {
                 : `Menampilkan ${spots.length} dari ${spots.length} spot`}
             </p>
           </div>
-          <ParkingMap spots={spots} onSpotClick={() => {}} />
+          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
         </div>
       </TabsContent>
       <TabsContent value="bookings" className="mt-6 space-y-4">
