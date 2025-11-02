@@ -3,17 +3,17 @@ import type { Booking, ParkingSpot } from "@/types/parking";
 export const generateMockParkingSpots = (): ParkingSpot[] => {
   const spots: ParkingSpot[] = [];
   const rows = 4;
-  const cols = 8;
+  const cols = 9;
   const spotWidth = 80;
-  const spotHeight = 120;
-  const gap = 20;
+  const spotHeight = 115;
+  const gap = 25;
 
   let counter = 1;
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const isOccupied = Math.random() > 0.6; // 40% occupied
-      const type = col === 0 ? "disabled" : col === 1 ? "electric" : col === 2 ? "regular" : "valet";
+      const type = col === 0 ? "disabled" : col === 1 ? "electric" : col === 2 ? "valet" : "regular";
 
       spots.push({
         id: `spot-${counter}`,
