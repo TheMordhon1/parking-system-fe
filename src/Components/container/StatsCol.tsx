@@ -1,13 +1,13 @@
-import type { ParkingSpot, Booking } from "../types/parking";
+import type { ParkingSpot, Booking } from "../../types/parking";
 import { Car, CheckCircle2, XCircle, Clock } from "lucide-react";
-import { Card, CardContent } from "./ui/card";
+import { Card, CardContent } from "../ui/card";
 
 interface StatsProps {
   spots: ParkingSpot[];
   bookings: Booking[];
 }
 
-export const Stats = ({ spots, bookings }: StatsProps) => {
+export const StatsCol = ({ spots, bookings }: StatsProps) => {
   const totalSpots = spots.length;
   const availableSpots = spots.filter((s) => s.status === "available").length;
   const occupiedSpots = spots.filter((s) => s.status === "occupied").length;
