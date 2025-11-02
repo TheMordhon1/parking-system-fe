@@ -88,8 +88,8 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                 key={`dash-${i}`}
                 x={i * (stageWidth / 20) + 10}
                 y={160}
-                width={30}
-                height={4}
+                width={20}
+                height={2}
                 fill="hsl(48, 96%, 53%)"
               />
             ))}
@@ -99,8 +99,8 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                 key={`dash-${i}`}
                 x={i * (stageWidth / 20) + 10}
                 y={300}
-                width={30}
-                height={4}
+                width={20}
+                height={2}
                 fill="hsl(48, 96%, 53%)"
               />
             ))}
@@ -110,8 +110,8 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                 key={`dash-${i}`}
                 x={i * (stageWidth / 20) + 10}
                 y={440}
-                width={30}
-                height={4}
+                width={20}
+                height={2}
                 fill="hsl(48, 96%, 53%)"
               />
             ))}

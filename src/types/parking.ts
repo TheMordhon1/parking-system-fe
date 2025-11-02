@@ -5,7 +5,7 @@ export interface ParkingSpot {
   y: number;
   width: number;
   height: number;
-  status: "available" | "occupied";
+  status: "tersedia" | "terisi";
   type: "umum" | "disabilitas" | "listrik" | "valet";
 }
 
@@ -16,8 +16,10 @@ export interface Booking {
   name: string;
   vehicleNumber: string;
   startTime: Date;
+  endTime?: Date;
   duration: number;
   status: "active" | "completed" | "overtime";
+  type: "umum" | "disabilitas" | "listrik" | "valet"
 }
 
 export interface BookingFormData {

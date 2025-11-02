@@ -1,4 +1,4 @@
-import type { Booking, ParkingSpot } from "@/types/parking";
+import type { ParkingSpot } from "@/types/parking";
 
 export const generateMockParkingSpots: ParkingSpot[] =
   [
@@ -20,7 +20,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "listrik"
+      "type": "disabilitas"
     },
     {
       "id": "spot-3",
@@ -30,7 +30,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "valet"
+      "type": "disabilitas"
     },
     {
       "id": "spot-4",
@@ -40,7 +40,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "umum"
+      "type": "disabilitas"
     },
     {
       "id": "spot-5",
@@ -49,8 +49,8 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "y": 25,
       "width": 80,
       "height": 115,
-      "status": "terisi",
-      "type": "umum"
+      "status": "tersedia",
+      "type": "listrik"
     },
     {
       "id": "spot-6",
@@ -60,7 +60,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "umum"
+      "type": "listrik"
     },
     {
       "id": "spot-7",
@@ -69,8 +69,8 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "y": 25,
       "width": 80,
       "height": 115,
-      "status": "terisi",
-      "type": "umum"
+      "status": "tersedia",
+      "type": "listrik"
     },
     {
       "id": "spot-8",
@@ -80,7 +80,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "umum"
+      "type": "listrik"
     },
     {
       "id": "spot-9",
@@ -90,131 +90,131 @@ export const generateMockParkingSpots: ParkingSpot[] =
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "umum"
+      "type": "listrik"
     },
     {
       "id": "spot-10",
-      "number": "A10",
+      "number": "B1",
       "x": 25,
       "y": 165,
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "disabilitas"
+      "type": "umum"
     },
     {
       "id": "spot-11",
-      "number": "A11",
+      "number": "B2",
       "x": 130,
       "y": 165,
       "width": 80,
       "height": 115,
-      "status": "terisi",
-      "type": "listrik"
+      "status": "tersedia",
+      "type": "umum"
     },
     {
       "id": "spot-12",
-      "number": "A12",
+      "number": "B3",
       "x": 235,
       "y": 165,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "valet"
     },
     {
       "id": "spot-13",
-      "number": "A13",
+      "number": "B4",
       "x": 340,
       "y": 165,
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "umum"
+      "type": "valet"
     },
     {
       "id": "spot-14",
-      "number": "A14",
+      "number": "B5",
       "x": 445,
       "y": 165,
-      "width": 80,
-      "height": 115,
-      "status": "terisi",
-      "type": "umum"
-    },
-    {
-      "id": "spot-15",
-      "number": "A15",
-      "x": 550,
-      "y": 165,
-      "width": 80,
-      "height": 115,
-      "status": "tersedia",
-      "type": "umum"
-    },
-    {
-      "id": "spot-16",
-      "number": "A16",
-      "x": 655,
-      "y": 165,
-      "width": 80,
-      "height": 115,
-      "status": "terisi",
-      "type": "umum"
-    },
-    {
-      "id": "spot-17",
-      "number": "A17",
-      "x": 760,
-      "y": 165,
-      "width": 80,
-      "height": 115,
-      "status": "terisi",
-      "type": "umum"
-    },
-    {
-      "id": "spot-18",
-      "number": "A18",
-      "x": 865,
-      "y": 165,
-      "width": 80,
-      "height": 115,
-      "status": "terisi",
-      "type": "umum"
-    },
-    {
-      "id": "spot-19",
-      "number": "A19",
-      "x": 25,
-      "y": 305,
-      "width": 80,
-      "height": 115,
-      "status": "tersedia",
-      "type": "disabilitas"
-    },
-    {
-      "id": "spot-20",
-      "number": "A20",
-      "x": 130,
-      "y": 305,
-      "width": 80,
-      "height": 115,
-      "status": "terisi",
-      "type": "listrik"
-    },
-    {
-      "id": "spot-21",
-      "number": "A21",
-      "x": 235,
-      "y": 305,
       "width": 80,
       "height": 115,
       "status": "tersedia",
       "type": "valet"
     },
     {
+      "id": "spot-15",
+      "number": "B6",
+      "x": 550,
+      "y": 165,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "valet"
+    },
+    {
+      "id": "spot-16",
+      "number": "B7",
+      "x": 655,
+      "y": 165,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "valet"
+    },
+    {
+      "id": "spot-17",
+      "number": "B8",
+      "x": 760,
+      "y": 165,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "umum"
+    },
+    {
+      "id": "spot-18",
+      "number": "B9",
+      "x": 865,
+      "y": 165,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "umum"
+    },
+    {
+      "id": "spot-19",
+      "number": "C1",
+      "x": 25,
+      "y": 305,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "umum"
+    },
+    {
+      "id": "spot-20",
+      "number": "C2",
+      "x": 130,
+      "y": 305,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "umum"
+    },
+    {
+      "id": "spot-21",
+      "number": "C3",
+      "x": 235,
+      "y": 305,
+      "width": 80,
+      "height": 115,
+      "status": "tersedia",
+      "type": "umum"
+    },
+    {
       "id": "spot-22",
-      "number": "A22",
+      "number": "C4",
       "x": 340,
       "y": 305,
       "width": 80,
@@ -224,7 +224,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-23",
-      "number": "A23",
+      "number": "C5",
       "x": 445,
       "y": 305,
       "width": 80,
@@ -234,7 +234,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-24",
-      "number": "A24",
+      "number": "C6",
       "x": 550,
       "y": 305,
       "width": 80,
@@ -244,7 +244,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-25",
-      "number": "A25",
+      "number": "C7",
       "x": 655,
       "y": 305,
       "width": 80,
@@ -254,7 +254,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-26",
-      "number": "A26",
+      "number": "C8",
       "x": 760,
       "y": 305,
       "width": 80,
@@ -264,57 +264,57 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-27",
-      "number": "A27",
+      "number": "C9",
       "x": 865,
       "y": 305,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "umum"
     },
     {
       "id": "spot-28",
-      "number": "A28",
+      "number": "D1",
       "x": 25,
       "y": 445,
       "width": 80,
       "height": 115,
-      "status": "terisi",
-      "type": "disabilitas"
+      "status": "tersedia",
+      "type": "umum"
     },
     {
       "id": "spot-29",
-      "number": "A29",
+      "number": "D2",
       "x": 130,
       "y": 445,
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "listrik"
+      "type": "umum"
     },
     {
       "id": "spot-30",
-      "number": "A30",
+      "number": "D3",
       "x": 235,
       "y": 445,
       "width": 80,
       "height": 115,
       "status": "tersedia",
-      "type": "valet"
+      "type": "umum"
     },
     {
       "id": "spot-31",
-      "number": "A31",
+      "number": "D4",
       "x": 340,
       "y": 445,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "umum"
     },
     {
       "id": "spot-32",
-      "number": "A32",
+      "number": "D5",
       "x": 445,
       "y": 445,
       "width": 80,
@@ -324,7 +324,7 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-33",
-      "number": "A33",
+      "number": "D6",
       "x": 550,
       "y": 445,
       "width": 80,
@@ -334,55 +334,32 @@ export const generateMockParkingSpots: ParkingSpot[] =
     },
     {
       "id": "spot-34",
-      "number": "A34",
+      "number": "D7",
       "x": 655,
       "y": 445,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "umum"
     },
     {
       "id": "spot-35",
-      "number": "A35",
+      "number": "D8",
       "x": 760,
       "y": 445,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "umum"
     },
     {
       "id": "spot-36",
-      "number": "A36",
+      "number": "D9",
       "x": 865,
       "y": 445,
       "width": 80,
       "height": 115,
-      "status": "terisi",
+      "status": "tersedia",
       "type": "umum"
     }
-  ]
-
-  ;
-
-
-export const generateMockBookings = (spots: ParkingSpot[]): Booking[] => {
-  const terisiSpots = spots.filter(spot => spot.status === "terisi");
-
-  return terisiSpots.map((spot, index) => {
-    const startTime = new Date();
-    startTime.setMinutes(startTime.getMinutes() - Math.floor(Math.random() * 120));
-
-    return {
-      id: `booking-${index + 1}`,
-      spotId: spot.id,
-      spotNumber: spot.number,
-      name: `User ${index + 1}`,
-      vehicleNumber: `B ${1000 + index} XYZ`,
-      startTime,
-      duration: 60 + Math.floor(Math.random() * 120),
-      status: "active" as const,
-    };
-  });
-};
+  ];

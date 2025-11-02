@@ -34,15 +34,25 @@ const TabContent = ({
         </div>
       </TabsContent>
       <TabsContent value="bookings" className="mt-6 space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {bookings.map((booking) => (
-            <BookingCard
-              key={booking.id}
-              booking={booking}
-              onEndSession={handleEndSession}
-            />
-          ))}
-        </div>
+        {bookings.length > 0 ? (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {bookings.map((booking) => (
+              <BookingCard
+                key={booking.id}
+                booking={booking}
+                onEndSession={handleEndSession}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center flex-col py-12 space-y-2 min-h-[50vh]">
+            <h3 className="text-black text-2xl">Tempat parkir masih kosong</h3>
+            <small className="text-muted-foreground">
+              Pilih tempat parkir pada tab{" "}
+              <span className="font-bold">Denah Parkir</span>
+            </small>
+          </div>
+        )}
       </TabsContent>
     </>
   );

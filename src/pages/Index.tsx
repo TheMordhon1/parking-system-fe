@@ -3,11 +3,15 @@ import Header from "@/Components/Header";
 import { StatsCol } from "@/Components/container/StatsCol";
 import TabContent from "@/Components/container/TabContent";
 import { Tabs, TabsList, TabsTrigger } from "@/Components/ui/tabs";
-import type { Booking, ParkingSpot } from "@/types/parking";
+import type { Booking, BookingFormData, ParkingSpot } from "@/types/parking";
+import { generateMockParkingSpots } from "@/utils/mockData";
 import {
-  generateMockBookings,
-  generateMockParkingSpots,
-} from "@/utils/mockData";
+  loadBookings,
+  loadSpots,
+  saveBookings,
+  saveSpots,
+} from "@/utils/useLocalStorage";
+import moment from "moment";
 import { useEffect, useState } from "react";
 
 const Index = () => {
@@ -17,9 +21,15 @@ const Index = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
-    const bookingsMock = generateMockBookings(generateMockParkingSpots);
-    setSpots(generateMockParkingSpots);
-    setBookings(bookingsMock);
+    const loadedSpots = loadSpots();
+    const loadedBookings = loadBookings();
+    if (loadedSpots && loadedBookings) {
+      setSpots(loadedSpots);
+      setBookings(loadedBookings);
+    } else {
+      setSpots(generateMockParkingSpots);
+      // setBookings(bookingsMock);
+    }
   }, []);
 
   const handleSpotClick = (spot: ParkingSpot) => {
@@ -27,6 +37,64 @@ const Index = () => {
       setSelectedSpot(spot);
       setIsFormOpen(true);
     }
+  };
+
+  const handleBookingSubmit = (data: BookingFormData) => {
+    if (!selectedSpot) return;
+
+    const newBooking: Booking = {
+      id: `P-${moment().unix()}`,
+      spotId: selectedSpot.id,
+      spotNumber: selectedSpot.number,
+      name: data.name,
+      vehicleNumber: data.vehicleNumber,
+      startTime: new Date(),
+      duration: data.duration,
+      status: "active",
+      type: selectedSpot.type,
+    };
+
+    const updatedSpots = spots.map((s) =>
+      s.id === selectedSpot.id ? { ...s, status: "terisi" as const } : s
+    );
+
+    const updatedBookings = [...bookings, newBooking];
+
+    setSpots(updatedSpots);
+    setBookings(updatedBookings);
+    saveSpots(updatedSpots);
+    saveBookings(updatedBookings);
+
+    alert("Berhasil");
+
+    setIsFormOpen(false);
+    setSelectedSpot(null);
+  };
+
+  const handleEndSession = (bookingId: string) => {
+    const booking = bookings.find((b) => b.id === bookingId);
+    if (!booking) return;
+
+    const updatedSpots = spots.map((s) =>
+      s.id === booking.spotId ? { ...s, status: "tersedia" as const } : s
+    );
+
+    const updatedBookings = bookings.map((b) =>
+      b.id === bookingId
+        ? {
+            ...b,
+            status: "completed" as const,
+            endTime: new Date(),
+          }
+        : b
+    );
+
+    setSpots(updatedSpots);
+    setBookings(updatedBookings);
+    saveSpots(updatedSpots);
+    saveBookings(updatedBookings);
+
+    alert(`Sesi parkir spot ${booking.spotNumber} telah diakhiri`);
   };
 
   return (
@@ -39,20 +107,22 @@ const Index = () => {
         <Tabs defaultValue="map" className="w-full">
           <TabsList className="grid w-full max-w-xl grid-cols-2">
             <TabsTrigger value="map">Denah Parkir</TabsTrigger>
-            <TabsTrigger value="bookings">Pemesanan</TabsTrigger>
+            <TabsTrigger value="bookings">
+              Pemesanan ({bookings.length})
+            </TabsTrigger>
           </TabsList>
 
           <TabContent
             spots={spots}
             bookings={bookings}
-            handleEndSession={() => {}}
+            handleEndSession={handleEndSession}
             handleSpotClick={handleSpotClick}
           />
 
           {isFormOpen && selectedSpot && (
             <BookingForm
               selectedSpot={selectedSpot}
-              onSubmit={() => {}}
+              onSubmit={handleBookingSubmit}
               onCancel={() => {
                 setIsFormOpen(false);
                 setSelectedSpot(null);

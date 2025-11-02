@@ -12,6 +12,9 @@ export const StatsCol = ({ spots, bookings }: StatsProps) => {
   const availableSpots = spots.filter((s) => s.status === "tersedia").length;
   const occupiedSpots = spots.filter((s) => s.status === "terisi").length;
   const activeBookings = bookings.filter((b) => b.status === "active").length;
+  const completedBookings = bookings.filter(
+    (b) => b.status === "completed"
+  ).length;
 
   const stats = [
     {
@@ -21,6 +24,7 @@ export const StatsCol = ({ spots, bookings }: StatsProps) => {
       color: "text-primary",
       bgColor: "bg-primary/10",
     },
+
     {
       label: "Tersedia",
       value: availableSpots,
@@ -42,10 +46,17 @@ export const StatsCol = ({ spots, bookings }: StatsProps) => {
       color: "text-warning",
       bgColor: "bg-warning/10",
     },
+    {
+      label: "Selesai",
+      value: completedBookings,
+      icon: CheckCircle2,
+      color: "text-success",
+      bgColor: "bg-warning/10",
+    },
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
       {stats.map((stat) => (
         <Card key={stat.label}>
           <CardContent className="px-6 py-2">

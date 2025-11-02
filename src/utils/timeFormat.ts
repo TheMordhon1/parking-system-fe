@@ -30,3 +30,9 @@ export const calculateOvertimeMinutes = (startTime: Date, duration: number): num
   const remaining = calculateRemainingTime(startTime, duration);
   return remaining < 0 ? Math.abs(remaining) : 0;
 };
+
+export const calculateDurationInMinutes = (startTime: Date, endTime: Date): number => {
+  const start = moment(startTime);
+  const end = moment(endTime);
+  return end.diff(start, "minutes"); // ✅ difference in minutes
+};
