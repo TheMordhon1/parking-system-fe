@@ -76,6 +76,26 @@ export const BookingForm = ({
     return formatted.trim();
   };
 
+  const durationOptions = [
+    { value: 15, label: "15 menit" },
+    { value: 30, label: "30 menit" },
+    { value: 60, label: "1 jam" },
+    { value: 90, label: "1.5 jam" },
+    { value: 120, label: "2 jam" },
+    { value: 180, label: "3 jam" },
+    { value: 240, label: "4 jam" },
+    { value: 300, label: "5 jam" },
+    { value: 360, label: "6 jam" },
+    { value: 420, label: "7 jam" },
+    { value: 480, label: "8 jam" },
+    { value: 540, label: "9 jam" },
+    { value: 600, label: "10 jam" },
+    { value: 660, label: "11 jam" },
+    { value: 720, label: "12 jam" },
+    { value: 1440, label: "1 hari" },
+    { value: 2880, label: "2 hari" },
+  ];
+
   const handleSubmit = (data: BookingFormData) => {
     onSubmit(data);
     form.reset();
@@ -86,8 +106,10 @@ export const BookingForm = ({
       <DialogContent className="sm:max-w-md rounded-2xl">
         <DialogHeader>
           <DialogTitle className="capitalize">
-            Pesan Tempat Parkir{" "}
-            <span className="text-xl italic">"{selectedSpot.type}"</span>
+            Pesan Tempat Parkir <br className="flex sm:hidden" />
+            <span className="text-lg md:text-xl italic">
+              "{selectedSpot.type}"
+            </span>
           </DialogTitle>
           <DialogDescription>
             Spot:{" "}
@@ -152,14 +174,15 @@ export const BookingForm = ({
                         <SelectValue placeholder="Pilih durasi" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="15">15 menit</SelectItem>
-                      <SelectItem value="30">30 menit</SelectItem>
-                      <SelectItem value="60">1 jam</SelectItem>
-                      <SelectItem value="90">1.5 jam</SelectItem>
-                      <SelectItem value="120">2 jam</SelectItem>
-                      <SelectItem value="180">3 jam</SelectItem>
-                      <SelectItem value="240">4 jam</SelectItem>
+                    <SelectContent className="max-h-[30vh] overflow-auto">
+                      {durationOptions.map((opt) => (
+                        <SelectItem
+                          key={opt.value}
+                          value={opt.value.toString()}
+                        >
+                          {opt.label}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   <FormMessage />

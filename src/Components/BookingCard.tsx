@@ -81,7 +81,9 @@ export const BookingCard = ({ booking, onEndSession }: BookingCardProps) => {
               <DialogDescription>
                 Apakah Anda yakin ingin mengakhiri sesi parkir untuk spot{" "}
                 <span className="font-semibold">{booking.spotNumber}</span>?
-                Waktu parkir yang tersisa akan dianggap selesai.
+                {!isOvertime && (
+                  <>Waktu parkir yang tersisa akan dianggap selesai.</>
+                )}
               </DialogDescription>
             </DialogHeader>
 

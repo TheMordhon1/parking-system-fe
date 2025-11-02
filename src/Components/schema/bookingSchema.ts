@@ -6,5 +6,5 @@ export const formSchema = z.object({
     .string()
     .min(1, "Nomor kendaraan harus diisi")
     .max(20, "Nomor kendaraan terlalu panjang"),
-  duration: z.number().min(15, "Minimal 15 menit").max(480, "Maksimal 8 jam"),
+  duration: z.number().min(15, "Minimal 15 menit").max(2880, "Maksimal 2 hari"),
 });

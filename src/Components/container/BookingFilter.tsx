@@ -38,7 +38,7 @@ export const BookingFilter = ({
           <h3 className="font-semibold text-foreground">Filter & Pencarian</h3>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-col sm:flex-row">
           {/* Search */}
           <div className="space-y-2 w-full">
             <Label htmlFor="booking-search">Cari Pemesanan</Label>
@@ -57,12 +57,12 @@ export const BookingFilter = ({
           <div className="space-y-2 w-full">
             <Label htmlFor="booking-status">Status</Label>
             <Select value={statusFilter} onValueChange={onStatusChange}>
-              <SelectTrigger id="booking-status">
+              <SelectTrigger id="booking-status" className="w-full">
                 <SelectValue placeholder="Semua Status" className="w-full" />
               </SelectTrigger>
               <SelectContent className="">
                 <SelectItem value="all">Semua Status</SelectItem>
-                <SelectItem value="active">Active ({activeCount})</SelectItem>
+                <SelectItem value="active">Aktif ({activeCount})</SelectItem>
                 <SelectItem value="completed">
                   Selesai ({completedCount})
                 </SelectItem>
@@ -78,7 +78,14 @@ export const BookingFilter = ({
           <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border">
             <span className="text-sm text-muted-foreground">Filter aktif:</span>
             {statusFilter !== "all" && (
-              <Badge variant="secondary">Status: {statusFilter}</Badge>
+              <Badge variant="secondary" className="capitalize">
+                Status:{" "}
+                {statusFilter === "active"
+                  ? "aktif"
+                  : statusFilter === "completed"
+                  ? "selesai"
+                  : "overtime"}
+              </Badge>
             )}
             {searchQuery && (
               <Badge variant="secondary">Pencarian: {searchQuery}</Badge>

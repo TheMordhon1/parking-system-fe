@@ -5,6 +5,7 @@ import { ParkingMap } from "./ParkingSpot";
 import { useMemo, useState } from "react";
 import { BookingFilter } from "./BookingFilter";
 import { calculateRemainingTime } from "@/utils/timeFormat";
+import { ParkingFilter } from "./ParkingFilter";
 
 interface TabContentProps {
   spots: ParkingSpot[];
@@ -19,6 +20,33 @@ const TabContent = ({
   handleSpotClick,
   handleEndSession,
 }: TabContentProps) => {
+  // Filter states for parking spots
+  const [spotStatusFilter, setSpotStatusFilter] = useState("all");
+  const [spotTypeFilter, setSpotTypeFilter] = useState("all");
+  const [spotSearchQuery, setSpotSearchQuery] = useState("");
+
+  const availableCount = spots.filter((s) => s.status === "tersedia").length;
+  const occupiedCount = spots.filter((s) => s.status === "terisi").length;
+
+  const filteredSpots = useMemo(() => {
+    return spots.filter((spot) => {
+      if (spotStatusFilter !== "all" && spot.status !== spotStatusFilter) {
+        return false;
+      }
+
+      if (spotTypeFilter !== "all" && spot.type !== spotTypeFilter) {
+        return false;
+      }
+
+      if (spotSearchQuery) {
+        const query = spotSearchQuery.toLowerCase();
+        return spot.number.toLowerCase().includes(query);
+      }
+
+      return true;
+    });
+  }, [spots, spotStatusFilter, spotTypeFilter, spotSearchQuery]);
+
   // Filter states for bookings
   const [bookingStatusFilter, setBookingStatusFilter] = useState("all");
   const [bookingSearchQuery, setBookingSearchQuery] = useState("");
@@ -27,7 +55,9 @@ const TabContent = ({
   const overtimeCount = activeBookings.filter(
     (b) => calculateRemainingTime(b.startTime, b.duration) < 0
   ).length;
-  const completedCount = bookings.filter((s) => s.status === "completed");
+  const completedCount = bookings.filter(
+    (s) => s.status === "completed"
+  ).length;
   const normalCount = activeBookings.length - overtimeCount;
 
   const filteredBookings = useMemo(() => {
@@ -71,18 +101,28 @@ const TabContent = ({
   return (
     <>
       <TabsContent value="map" className="mt-6 space-y-4">
+        <ParkingFilter
+          statusFilter={spotStatusFilter}
+          typeFilter={spotTypeFilter}
+          searchQuery={spotSearchQuery}
+          onStatusChange={setSpotStatusFilter}
+          onTypeChange={setSpotTypeFilter}
+          onSearchChange={setSpotSearchQuery}
+          availableCount={availableCount}
+          occupiedCount={occupiedCount}
+        />
         <div className="bg-card border border-border rounded-lg p-4 md:p-6">
           <div className="mb-4">
             <h2 className="text-xl font-semibold text-foreground mb-2">
               Denah Parkiran
             </h2>
             <p className="text-sm text-muted-foreground">
-              {spots.length === spots.length
+              {filteredSpots.length === spots.length
                 ? "Klik pada spot yang tersedia untuk memesan"
-                : `Menampilkan ${spots.length} dari ${spots.length} spot`}
+                : `Menampilkan ${filteredSpots.length} dari ${spots.length} spot`}
             </p>
           </div>
-          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
+          <ParkingMap spots={filteredSpots} onSpotClick={handleSpotClick} />
         </div>
       </TabsContent>
       <TabsContent value="bookings" className="mt-6 space-y-4">
@@ -92,7 +132,7 @@ const TabContent = ({
           onStatusChange={setBookingStatusFilter}
           onSearchChange={setBookingSearchQuery}
           activeCount={normalCount}
-          completedCount={completedCount.length}
+          completedCount={completedCount}
           overtimeCount={overtimeCount}
         />
         {filteredBookings.length > 0 ? (
