@@ -1,10 +1,19 @@
 import Header from "@/Components/Header";
+import { Stats } from "@/Components/StatsCol";
+import type { Booking, ParkingSpot } from "@/types/parking";
+import { useState } from "react";
 
 const Index = () => {
+  const [spots, setSpots] = useState<ParkingSpot[]>([]);
+  const [bookings, setBookings] = useState<Booking[]>([]);
   return (
-    <div className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
-    </div>
+
+      <section className="container mx-auto px-4 py-8">
+        <Stats spots={spots} bookings={bookings} />
+      </section>
+    </main>
   );
 };
 
