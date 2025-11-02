@@ -13,6 +13,7 @@ import {
 } from "@/utils/useLocalStorage";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const Index = () => {
   const [spots, setSpots] = useState<ParkingSpot[]>([]);
@@ -65,7 +66,7 @@ const Index = () => {
     saveSpots(updatedSpots);
     saveBookings(updatedBookings);
 
-    alert("Berhasil");
+    toast.success("Booking Berhasil !!!");
 
     setIsFormOpen(false);
     setSelectedSpot(null);
@@ -94,7 +95,7 @@ const Index = () => {
     saveSpots(updatedSpots);
     saveBookings(updatedBookings);
 
-    alert(`Sesi parkir spot ${booking.spotNumber} telah diakhiri`);
+    toast.success(`Sesi parkir spot ${booking.spotNumber} telah diakhiri`);
   };
 
   return (
