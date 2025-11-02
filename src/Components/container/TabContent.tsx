@@ -2,6 +2,9 @@ import type { Booking, ParkingSpot } from "@/types/parking";
 import { TabsContent } from "../ui/tabs";
 import { BookingCard } from "../BookingCard";
 import { ParkingMap } from "./ParkingSpot";
+import { useMemo, useState } from "react";
+import { BookingFilter } from "./BookingFilter";
+import { calculateRemainingTime } from "@/utils/timeFormat";
 
 interface TabContentProps {
   spots: ParkingSpot[];
@@ -16,6 +19,55 @@ const TabContent = ({
   handleSpotClick,
   handleEndSession,
 }: TabContentProps) => {
+  // Filter states for bookings
+  const [bookingStatusFilter, setBookingStatusFilter] = useState("all");
+  const [bookingSearchQuery, setBookingSearchQuery] = useState("");
+
+  const activeBookings = bookings.filter((b) => b.status === "active");
+  const overtimeCount = activeBookings.filter(
+    (b) => calculateRemainingTime(b.startTime, b.duration) < 0
+  ).length;
+  const completedCount = bookings.filter((s) => s.status === "completed");
+  const normalCount = activeBookings.length - overtimeCount;
+
+  const filteredBookings = useMemo(() => {
+    return bookings.filter((booking) => {
+      const remaining = calculateRemainingTime(
+        booking.startTime,
+        booking.duration
+      );
+      const isOvertime = remaining < 0;
+      const isActive = booking.status === "active";
+      const isCompleted = booking.status === "completed";
+
+      // 🔹 Filter by status
+      switch (bookingStatusFilter) {
+        case "overtime":
+          if (!isActive || !isOvertime) return false;
+          break;
+        case "active":
+          if (!isActive || isOvertime) return false;
+          break;
+        case "completed":
+          if (!isCompleted) return false;
+          break;
+        default:
+          break;
+      }
+
+      if (bookingSearchQuery.trim() !== "") {
+        const query = bookingSearchQuery.toLowerCase();
+        return (
+          booking.name.toLowerCase().includes(query) ||
+          booking.vehicleNumber.toLowerCase().includes(query) ||
+          booking.spotNumber.toLowerCase().includes(query)
+        );
+      }
+
+      return true;
+    });
+  }, [bookings, bookingStatusFilter, bookingSearchQuery]);
+
   return (
     <>
       <TabsContent value="map" className="mt-6 space-y-4">
@@ -34,9 +86,18 @@ const TabContent = ({
         </div>
       </TabsContent>
       <TabsContent value="bookings" className="mt-6 space-y-4">
-        {bookings.length > 0 ? (
+        <BookingFilter
+          statusFilter={bookingStatusFilter}
+          searchQuery={bookingSearchQuery}
+          onStatusChange={setBookingStatusFilter}
+          onSearchChange={setBookingSearchQuery}
+          activeCount={normalCount}
+          completedCount={completedCount.length}
+          overtimeCount={overtimeCount}
+        />
+        {filteredBookings.length > 0 ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {bookings.map((booking) => (
+            {filteredBookings.map((booking) => (
               <BookingCard
                 key={booking.id}
                 booking={booking}
