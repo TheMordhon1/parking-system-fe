@@ -90,6 +90,12 @@ export const BookingCard = ({
     setConfirmOpen(false);
   };
 
+  useEffect(() => {
+    if (!confirmOpen && isRemove) {
+      setIsRemove(false);
+    }
+  }, [confirmOpen, isRemove]);
+
   return (
     <>
       {confirmOpen && (
