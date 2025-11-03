@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Index from "./pages/Index";
-import { Toaster } from "./Components/ui/sonner";
+import Index from "@/pages/Index";
+import { Toaster } from "@/components/ui/sonner";
 
 const App = () => {
   return (

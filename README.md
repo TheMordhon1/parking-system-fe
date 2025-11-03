@@ -29,3 +29,15 @@ Aplikasi **Manajemen Parkir Modern** berbasis web yang dibuat dengan **React + T
    ```bash
    npx shadcn@latest add [nama-komponen]
    ```
+
+# Repository
+
+```bash
+https://github.com/TheMordhon1/parking-system-fe
+```
+
+# Live Website
+
+```bash
+https://parkir-disini.web.app/
+```

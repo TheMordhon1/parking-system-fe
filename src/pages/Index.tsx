@@ -1,8 +1,8 @@
-import { BookingForm } from "@/Components/BookingForm";
-import Header from "@/Components/Header";
-import { StatsCol } from "@/Components/container/StatsCol";
-import TabContent from "@/Components/container/TabContent";
-import { Tabs, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { BookingForm } from "@/components/BookingForm";
+import Header from "@/components/Header";
+import { StatsCol } from "@/components/container/StatsCol";
+import TabContent from "@/components/container/TabContent";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { Booking, BookingFormData, ParkingSpot } from "@/types/parking";
 import { generateMockParkingSpots } from "@/utils/mockData";
 import {

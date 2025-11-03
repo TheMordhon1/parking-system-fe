@@ -1,6 +1,6 @@
-import type { ParkingSpot, Booking } from "../../types/parking";
+import type { ParkingSpot, Booking } from "@/types/parking";
 import { Car, CheckCircle2, XCircle, Clock } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface StatsProps {
   spots: ParkingSpot[];

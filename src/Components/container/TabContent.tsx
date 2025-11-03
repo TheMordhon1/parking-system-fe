@@ -1,7 +1,7 @@
 import type { Booking, ParkingSpot } from "@/types/parking";
-import { TabsContent } from "../ui/tabs";
-import { BookingCard } from "../BookingCard";
-import { ParkingMap } from "./ParkingSpot";
+import { TabsContent } from "@/components/ui/tabs";
+import { BookingCard } from "@/components/BookingCard";
+import { ParkingMap } from "@/components/container/ParkingMap";
 import { useMemo, useState } from "react";
 import { BookingFilter } from "./BookingFilter";
 import { calculateRemainingTime } from "@/utils/timeFormat";
