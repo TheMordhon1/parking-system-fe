@@ -15,7 +15,7 @@ Aplikasi **Manajemen Parkir Modern** berbasis web yang dibuat dengan **React + T
    ```bash
    npm install
    ```
-3. **Run the app**
+3. **Jalankan Aplikasi**
    ```bash
    npm run dev
    ```
