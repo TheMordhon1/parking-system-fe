@@ -5,6 +5,7 @@ import {
   calculateRemainingTime,
   formatDuration,
 } from "@/utils/timeFormat";
+import { removeBookingById } from "@/utils/useLocalStorage";
 import {
   AlertTriangle,
   Calendar,
@@ -26,17 +27,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
+import { toast } from "sonner";
 
 interface BookingCardProps {
   booking: Booking;
   onEndSession: (bookingId: string) => void;
+  onRemoveSession: (bookingId: string) => void;
 }
 
-export const BookingCard = ({ booking, onEndSession }: BookingCardProps) => {
+export const BookingCard = ({
+  booking,
+  onEndSession,
+  onRemoveSession,
+}: BookingCardProps) => {
   const [remainingMinutes, setRemainingTime] = useState(
     calculateRemainingTime(booking.startTime, booking.duration)
   );
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const [isRemove, setIsRemove] = useState<boolean>(false);
 
   // update every minute
   useEffect(() => {
@@ -71,17 +79,34 @@ export const BookingCard = ({ booking, onEndSession }: BookingCardProps) => {
   const isCompleted = booking.status === "completed";
   const isOvertime = overtimeMinutes > 0 && !isCompleted;
 
+  const handleOnEndSession = () => {
+    if (booking.id) {
+      onEndSession(booking.id);
+    }
+    setConfirmOpen(false);
+  };
+
+  const handleOnRemoveSession = () => {
+    onRemoveSession(booking.id);
+    setIsRemove(false);
+    setConfirmOpen(false);
+  };
+
   return (
     <>
       {confirmOpen && (
         <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
           <DialogContent className="sm:max-w-md rounded-xl">
             <DialogHeader>
-              <DialogTitle>Konfirmasi Akhiri Sesi</DialogTitle>
+              <DialogTitle>
+                Konfirmasi {isRemove ? "Hapus Sesi" : "Akhiri Sesi"}
+              </DialogTitle>
               <DialogDescription>
-                Apakah Anda yakin ingin mengakhiri sesi parkir untuk spot{" "}
+                Apakah kamu yakin ingin{" "}
+                {isRemove ? "menghapus sesi ini" : "mengakhiri sesi parkir"}{" "}
+                untuk spot{" "}
                 <span className="font-semibold">{booking.spotNumber}</span>?
-                {!isOvertime && (
+                {!isOvertime && !isRemove && (
                   <>Waktu parkir yang tersisa akan dianggap selesai.</>
                 )}
               </DialogDescription>
@@ -91,21 +116,20 @@ export const BookingCard = ({ booking, onEndSession }: BookingCardProps) => {
               <Button variant="outline" onClick={() => setConfirmOpen(false)}>
                 Batal
               </Button>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  if (booking.id) {
-                    onEndSession(booking.id);
-                  }
-                  setConfirmOpen(false);
-                }}
-              >
-                Ya, Akhiri
-              </Button>
+              {isRemove ? (
+                <Button variant="destructive" onClick={handleOnRemoveSession}>
+                  Ya, Hapus
+                </Button>
+              ) : (
+                <Button variant="destructive" onClick={handleOnEndSession}>
+                  Ya, Akhiri
+                </Button>
+              )}
             </DialogFooter>
           </DialogContent>
         </Dialog>
       )}
+
       <Card className="hover:shadow-md transition-shadow">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
@@ -216,6 +240,16 @@ export const BookingCard = ({ booking, onEndSession }: BookingCardProps) => {
               disabled={isCompleted}
             >
               Akhiri Sesi Parkir
+            </Button>
+            <Button
+              variant={"outline"}
+              className="w-full text-destructive hover:text-destructive"
+              onClick={() => {
+                setConfirmOpen(true);
+                setIsRemove(true);
+              }}
+            >
+              Hapus Sesi Parkir
             </Button>
           </div>
         </CardContent>

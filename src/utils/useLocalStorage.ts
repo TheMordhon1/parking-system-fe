@@ -1,4 +1,4 @@
-import type { ParkingSpot, Booking } from "@/types/parking";
+import type { Booking, ParkingSpot } from "@/types/parking";
 import moment from "moment";
 
 const STORAGE_KEYS = {
@@ -9,7 +9,6 @@ const STORAGE_KEYS = {
 
 export const saveSpots = (spots: ParkingSpot[]): void => {
   localStorage.setItem(STORAGE_KEYS.SPOTS, JSON.stringify(spots));
-  console.log("Save Spots", JSON.stringify(spots))
 };
 
 
@@ -25,7 +24,7 @@ export const saveBookings = (bookings: Booking[]): void => {
     startTime: moment(booking.startTime).toISOString(),
   }));
   localStorage.setItem(STORAGE_KEYS.BOOKINGS, JSON.stringify(serializedBookings));
-  console.log("Save Booking", JSON.stringify(serializedBookings))
+
 };
 
 
@@ -38,4 +37,14 @@ export const loadBookings = (): Booking[] | null => {
     ...booking,
     startTime: moment(booking.startTime),
   }));
+};
+
+export const removeBookingById = (bookingId: string): Booking[] | undefined => {
+  const current = loadBookings();
+  if (current) {
+    const updated = current.filter((b) => b.id !== bookingId);
+    saveBookings(updated);
+    return updated;
+  }
+  return;
 };

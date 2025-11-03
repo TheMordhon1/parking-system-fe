@@ -10,7 +10,9 @@ import { ParkingFilter } from "./ParkingFilter";
 interface TabContentProps {
   spots: ParkingSpot[];
   bookings: Booking[];
+
   handleEndSession: (bookingId: string) => void;
+  handleRemoveSession: (bookingId: string) => void;
   handleSpotClick: (spot: ParkingSpot) => void;
 }
 
@@ -19,6 +21,7 @@ const TabContent = ({
   bookings,
   handleSpotClick,
   handleEndSession,
+  handleRemoveSession,
 }: TabContentProps) => {
   // Filter states for parking spots
   const [spotStatusFilter, setSpotStatusFilter] = useState("all");
@@ -70,7 +73,7 @@ const TabContent = ({
       const isActive = booking.status === "active";
       const isCompleted = booking.status === "completed";
 
-      // 🔹 Filter by status
+      // Filter by status
       switch (bookingStatusFilter) {
         case "overtime":
           if (!isActive || !isOvertime) return false;
@@ -142,6 +145,7 @@ const TabContent = ({
                 key={booking.id}
                 booking={booking}
                 onEndSession={handleEndSession}
+                onRemoveSession={handleRemoveSession}
               />
             ))}
           </div>

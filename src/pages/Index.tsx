@@ -8,6 +8,7 @@ import { generateMockParkingSpots } from "@/utils/mockData";
 import {
   loadBookings,
   loadSpots,
+  removeBookingById,
   saveBookings,
   saveSpots,
 } from "@/utils/useLocalStorage";
@@ -66,7 +67,7 @@ const Index = () => {
     saveSpots(updatedSpots);
     saveBookings(updatedBookings);
 
-    toast.success("Booking Berhasil !!!");
+    toast.success(`Booking untuk ${selectedSpot.id} berhasil.`);
 
     setIsFormOpen(false);
     setSelectedSpot(null);
@@ -98,6 +99,27 @@ const Index = () => {
     toast.success(`Sesi parkir spot ${booking.spotNumber} telah diakhiri`);
   };
 
+  const handleRemoveSession = (bookingId: string) => {
+    const booking = bookings.find((b) => b.id === bookingId);
+    if (!booking) {
+      toast.error("Data booking tidak ditemukan.");
+      return;
+    }
+
+    const updatedSpots = spots.map((s) =>
+      s.id === booking.spotId ? { ...s, status: "tersedia" as const } : s
+    );
+
+    const updatedBookings = removeBookingById(bookingId);
+    if (updatedBookings) {
+      setSpots(updatedSpots);
+      setBookings(updatedBookings);
+      toast.success(
+        `Sesi untuk spot ${booking?.spotNumber} berhasil di hapus.`
+      );
+    }
+  };
+
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -117,6 +139,7 @@ const Index = () => {
             spots={spots}
             bookings={bookings}
             handleEndSession={handleEndSession}
+            handleRemoveSession={handleRemoveSession}
             handleSpotClick={handleSpotClick}
           />
 
