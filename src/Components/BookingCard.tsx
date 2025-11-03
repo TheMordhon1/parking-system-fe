@@ -5,7 +5,6 @@ import {
   calculateRemainingTime,
   formatDuration,
 } from "@/utils/timeFormat";
-import { removeBookingById } from "@/utils/useLocalStorage";
 import {
   AlertTriangle,
   Calendar,
@@ -27,7 +26,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { toast } from "sonner";
 
 interface BookingCardProps {
   booking: Booking;
