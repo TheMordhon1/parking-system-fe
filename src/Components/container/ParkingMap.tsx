@@ -21,8 +21,8 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
   const stageWidth = 1000;
   const stageHeight = 600;
 
-  const getSpotColor = (spot: ParkingSpot) => {
-    if (spot.status === "tersedia") {
+  const getSpotColor = (status: ParkingSpot["status"]) => {
+    if (status === "tersedia") {
       return "#22c55e";
     } else {
       return "#ef4444";
@@ -40,7 +40,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
       case "umum":
         return "🚗";
       default:
-        return "";
+        return "⛔";
     }
   };
 
@@ -149,7 +149,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                     <Rect
                       width={spot.width}
                       height={spot.height}
-                      fill={getSpotColor(spot)}
+                      fill={getSpotColor(spot.status)}
                       stroke="#ffffff"
                       strokeWidth={2}
                       cornerRadius={4}
@@ -178,7 +178,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
                       x={0}
                       y={spot.height - 30}
                       width={spot.width}
-                      text={spot.status === "tersedia" ? "TERSEDIA" : "TERISI"}
+                      text={spot.status.toUpperCase()}
                       fontSize={10}
                       fill="#ffffff"
                       align="center"

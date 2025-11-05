@@ -189,7 +189,8 @@ export const BookingCard = ({
                 <div className="flex items-center gap-2 text-sm">
                   <LogOut className="h-4 w-4 text-muted-foreground" />
                   <span>
-                    Selesai: {moment(booking.endTime).format("hh.mm")}
+                    Selesai:{" "}
+                    {moment(booking.endTime).format("DD MMMM YYYY hh.mm")}
                   </span>
                 </div>
 

@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { formSchema } from "./schema/bookingSchema";
+import z from "zod";
 
 interface BookingFormProps {
   selectedSpot: ParkingSpot;
@@ -42,15 +43,14 @@ export const BookingForm = ({
 }: BookingFormProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const form = useForm<BookingFormData>({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       vehicleNumber: "",
-      duration: 60,
+      duration: 120,
     },
   });
-
   useEffect(() => {
     if (selectedSpot) {
       setOpen(true);

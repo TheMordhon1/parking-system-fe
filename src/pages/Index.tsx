@@ -30,7 +30,6 @@ const Index = () => {
       setBookings(loadedBookings);
     } else {
       setSpots(generateMockParkingSpots);
-      // setBookings(bookingsMock);
     }
   }, []);
 
