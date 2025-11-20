@@ -1,7 +1,6 @@
 import type { ParkingSpot } from "@/types/parking";
-import type Konva from "konva";
 import type { KonvaEventObject } from "konva/lib/Node";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Group, Layer, Rect, Stage, Text } from "react-konva";
 
 interface ParkingMapProps {
@@ -13,8 +12,6 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
   spots,
   onSpotClick,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<Konva.Stage>(null);
   const [hoveredSpotId, setHoveredSpotId] = useState<string | null>(null);
 
   const stageScale = 1;
@@ -64,7 +61,7 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="w-full overflow-x-auto py-6">
+    <div className="w-full overflow-x-auto py-6">
       <div
         style={{
           width: `${stageWidth}px`,
@@ -74,7 +71,6 @@ export const ParkingMap: React.FC<ParkingMapProps> = ({
         }}
       >
         <Stage
-          ref={stageRef}
           width={stageWidth - 25}
           height={stageHeight + 30}
           scaleX={stageScale}
